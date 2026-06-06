@@ -8,6 +8,19 @@
 import json
 import sys
 import time
+
+DATA_SNAPSHOT_DATE = "2026-06-07"
+
+
+def effective_apy(option: "StakingOption") -> float:
+    """Return live APY when available, otherwise the static midpoint."""
+    if option.real_apy is not None:
+        return option.real_apy
+    return (option.apy_low + option.apy_high) / 2
+
+
+def sort_by_effective_apy(options: list["StakingOption"]) -> list["StakingOption"]:
+    return sorted(options, key=effective_apy, reverse=True)
 from datetime import datetime
 from dataclasses import dataclass, field
 from typing import Optional
@@ -471,6 +484,7 @@ def print_header():
 ║                                                                          ║
 ╚══════════════════════════════════════════════════════════════════════════╝{C.RESET}
 """)
+    print(f"  기준 데이터: {DATA_SNAPSHOT_DATE} | API 값은 실행 시 조회, 실패 시 정적 범위 사용\n")
 
 
 def print_eth_price(price: Optional[float]):

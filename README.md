@@ -1,54 +1,47 @@
-# 💎 Ethereum Staking Yield Comparison
+# Ethereum Staking Compare
 
-이더리움(ETH) 스테이킹 수익률 비교 분석 도구
+Ethereum 스테이킹·리퀴드 스테이킹·DeFi 옵션의 수익률과 위험을 비교하는 CLI 및
+Streamlit 대시보드입니다.
 
-## 📁 파일 구조
+## 기능
 
-```
-ethereum/
-├── eth_staking_compare.py   # CLI 비교 분석 도구 (20개 프로토콜)
-├── eth_dashboard.py          # Streamlit 웹 대시보드 (포트 8556)
-├── start_eth_dashboard.sh    # 대시보드 실행 스크립트
-└── README.md                 # 이 파일
-```
+- 정적 기준 범위와 실행 시 조회한 API 값을 구분
+- APY, 유동성, 언본딩 기간, 최소 예치액, 위험 수준 비교
+- API 장애 시 정적 데이터로 계속 동작
+- CLI 리포트와 웹 대시보드
 
-## 🚀 실행 방법
+## 설치
 
-### CLI 분석 도구
 ```bash
-cd ~/ethereum
-python3 eth_staking_compare.py
+git clone https://github.com/kky922/eth-staking-compare.git
+cd eth-staking-compare
+python3 -m venv .venv
+source .venv/bin/activate
+pip install -r requirements.txt
 ```
 
-### 웹 대시보드
+## 설정
+
+API 키는 필요하지 않습니다. 외부 공개 API를 사용할 수 없으면 저장소의 기준 범위를 표시합니다.
+
+## 실행
+
 ```bash
-cd ~/ethereum
-chmod +x start_eth_dashboard.sh
-./start_eth_dashboard.sh
-# 브라우저에서 http://localhost:8556 접속
+python eth_staking_compare.py
+streamlit run eth_dashboard.py --server.port 8556
 ```
 
-## 📊 비교 카테고리 (20개 프로토콜)
+## 테스트
 
-| 카테고리 | 프로토콜 | 예상 APY |
-|---------|---------|---------|
-| 🏛️ 네이티브 스테이킹 | 직접 밸리데이터, SaaS/풀 | 2.8~4.0% |
-| 💧 리퀴드 스테이킹 | Lido, Rocket Pool, Coinbase, Frax, StakeWise, Mantle | 2.5~4.5% |
-| 🏦 DeFi 렌딩 | Aave V3, Compound V3, Spark | 0.5~3.0% |
-| 🔄 레스테이킹 | EigenLayer, EtherFi, Puffer, Renzo | 4.0~10.0% |
-| 📈 Vault / 자동화 | Yearn, Pendle | 3.5~8.0% |
-| 🌊 DEX LP | Uniswap V3, Curve | 3.0~12.0% |
+```bash
+pytest -q
+```
 
-## 🔌 실시간 API 연동
+## 주의사항
 
-- **ETH 가격**: CoinGecko API
-- **Lido stETH APR**: Lido API
-- **Rocket Pool rETH APR**: Rocket Pool API
+표시된 수익률은 보장되지 않으며 프로토콜, 스마트 컨트랙트, 유동성, 슬래싱과 가격
+변동 위험이 있습니다. 투자·세무 자문이 아닙니다.
 
-## 📋 대시보드 탭
+## 라이선스
 
-1. **📊 비교 테이블** - 전체 프로토콜 정렬/필터
-2. **📈 시각화** - APY 바차트, 리스크-수익률 스캐터
-3. **📋 프로토콜 상세** - 카드 형태 상세 정보
-4. **🎯 추천 전략** - 보수형/중립형/공격형
-5. **💰 수익 시뮬레이터** - 단리/복리 계산
+MIT
